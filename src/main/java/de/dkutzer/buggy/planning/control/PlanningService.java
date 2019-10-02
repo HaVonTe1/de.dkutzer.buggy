@@ -36,7 +36,7 @@ public class PlanningService {
         PlanningDto planningDto = new PlanningDto();
 
         final List<IssueEntitiy> allEstimatedStories = issueRepository
-            .findAllByTypeAndStatusOrderByPriorityCreatedAt(Type.STORY.name(), Status.Estimated.name());
+            .findAllByTypeAndStatusOrderByPriorityAsc(Type.STORY.name(), Status.Estimated.name());
         Summary summary = calcSummary(allEstimatedStories);
         planningDto.setSummary(summary);
 
@@ -46,8 +46,8 @@ public class PlanningService {
         MultiValueMap<Integer, IssueDto> issuesPerWeek = new LinkedMultiValueMap<>();
         List<IssueEntitiy> remaningIssues = new ArrayList<>(allEstimatedStories);
         List<IssueEntitiy> issues = new ArrayList<>(remaningIssues);
+        int currentWeek = 1;
         while (!issues.isEmpty()){
-            int currentWeek = 1;
             for (IssueEntitiy  issueEntitiy : issues){
                 final int points = issueEntitiy.getPoints();
                 if(points <= capacity){
@@ -77,6 +77,7 @@ public class PlanningService {
         });
         planningDto.setWeeks(weeks);
 
+        planningDto.getSummary().setWeeks(weeks.size());
         planningDto.getSummary().calcIssuesPerWeek();
 
         return planningDto;

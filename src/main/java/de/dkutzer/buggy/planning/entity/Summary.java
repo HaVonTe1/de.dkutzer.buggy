@@ -41,6 +41,6 @@ public class Summary {
     }
 
     public void calcIssuesPerWeek() {
-        this.issuesPerWeek = (double)(issues / getWeeks());
+        this.issuesPerWeek = getWeeks()!=0?(double)(issues / getWeeks()):0.0;
     }
 }

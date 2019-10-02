@@ -10,5 +10,5 @@ public interface IssueRepository extends MongoRepository<IssueEntitiy, String> {
 
     boolean existsByAssignee(String name);
 
-    List<IssueEntitiy> findAllByTypeAndStatusOrderByPriorityCreatedAt(String type, String status);
+    List<IssueEntitiy> findAllByTypeAndStatusOrderByPriorityAsc(String type, String status);
 }

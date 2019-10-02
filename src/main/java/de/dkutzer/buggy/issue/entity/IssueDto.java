@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.StringJoiner;
 
 public class IssueDto  {
-    protected String id;
-    protected Type type;
-    protected String title;
-    protected String description;
-    protected LocalDate createdAt;
-    protected String assignee;
+    private String id;
+    private Type type;
+    private String title;
+    private String description;
+    private LocalDate createdAt;
+    private String assignee;
     private Integer points;
 
     private Status status;

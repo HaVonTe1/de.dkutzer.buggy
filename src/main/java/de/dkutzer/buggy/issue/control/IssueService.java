@@ -11,6 +11,7 @@ import de.dkutzer.buggy.issue.entity.Type;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,10 @@ public class IssueService {
     }
 
     public  IssueDto upsert(IssueDto dto) {
-        IssueEntitiy entity = issueRepository.findById(dto.getId()).orElse(new IssueEntitiy());
+        IssueEntitiy entity = dto.getId()!=null ? issueRepository.findById(dto.getId()).orElse(new IssueEntitiy()) : new IssueEntitiy();
+        if(entity.getId()==null){
+            entity.setId(UUID.randomUUID().toString());
+        }
         checkCreatedAt(dto, entity);
         checkAssignee(dto, entity);
         entity.setAssignee(dto.getAssignee());

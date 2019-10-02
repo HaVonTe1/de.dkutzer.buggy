@@ -17,7 +17,7 @@ public class PlanningController {
         this.planningService = planningService;
     }
 
-    @GetMapping(path = "/planning")
+    @GetMapping(path = "/planning/")
     public PlanningDto planning(){
 
         return planningService.doPlanning();

@@ -42,6 +42,6 @@ public class DeveloperService {
     }
 
     public List<DeveloperDto> findAll() {
-        return developerRepository.findAll().stream().map(DeveloperEntity::toDto).collect(Collectors.toList());
+        return developerRepository.findAllByOrderByNameAsc().stream().map(DeveloperEntity::toDto).collect(Collectors.toList());
     }
 }

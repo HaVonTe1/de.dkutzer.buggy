@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@TypeAlias("Developer")
-@Document(collection = "developer")
+@TypeAlias("Issue")
+@Document(collection = "issue")
 @CompoundIndexes({
     @CompoundIndex(name = "status_type", def = "{'status' : 1, 'type': 1}"),
     @CompoundIndex(name = "priority_createdAt", def = "{'priority' : 1, 'createdAt': 1}")

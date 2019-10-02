@@ -30,7 +30,7 @@ public class SwaggerConfig {
   }
 
   private Predicate<String> paths() {
-    return or(regex("/developers/.*"), regex("/issues/.*"));
+    return or(regex("/developers/.*"), regex("/issues/.*"), regex("/planning/.*"));
   }
 
   private ApiInfo apiInfo() {
