@@ -9,6 +9,16 @@ public class DeveloperDto {
     @NotEmpty
     private String name;
 
+//    private int age;
+
+//    public int getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+
     public String getName() {
         return name;
     }
@@ -23,11 +33,8 @@ public class DeveloperDto {
         return developerEntity;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("DeveloperInDto{");
-        sb.append("name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+//    @Override
+//    public String toString() {
+//        return "DeveloperDto{" + "name='" + name + '\'' + ", age=" + age + '}';
+//    }
 }

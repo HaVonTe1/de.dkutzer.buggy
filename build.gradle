@@ -45,6 +45,7 @@ asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
     attributes 'snippets': snippetsDir, 'projectdir': snippetsDir.toString()
+    outputDir "build/docs"
 
 }
 
