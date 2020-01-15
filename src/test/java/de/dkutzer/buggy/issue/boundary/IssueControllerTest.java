@@ -8,10 +8,13 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dkutzer.buggy.ConstrainedFields;
 import de.dkutzer.buggy.developer.control.DeveloperRepository;
+import de.dkutzer.buggy.developer.entity.DeveloperDto;
 import de.dkutzer.buggy.issue.control.IssueRepository;
 import de.dkutzer.buggy.issue.entity.IssueDto;
 import de.dkutzer.buggy.issue.entity.Status;
@@ -30,6 +33,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -41,6 +45,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Tag("restdocs")
+@ActiveProfiles("test")
 class IssueControllerTest {
 
     private MockMvc mockMvc;
@@ -65,17 +70,18 @@ class IssueControllerTest {
                 .withResponseDefaults(prettyPrint()))
             .build();
     }
+    private static  final ConstrainedFields CONSTRAINED_FIELDS = new ConstrainedFields(IssueDto.class);
 
     private static final FieldDescriptor[] issueFieldDescriptors = {
-        fieldWithPath("type").description("The type of the Issue. Bug or Story"),
-        fieldWithPath("description").description("The description of the Issue."),
-        fieldWithPath("points").description("The estimated workload to finish the story."),
-        fieldWithPath("status").description("The current status."),
-        fieldWithPath("id").description("The unique id."),
-        fieldWithPath("createdAt").description("UTC Time of the creation of the issue."),
-        fieldWithPath("assignee").description("Currently assigned developer"),
-        fieldWithPath("priority").description("Priority of the Bug"),
-        fieldWithPath("title").description("The title of the Issue.")
+        fieldWithPath("type").description("The type of the Issue. Bug or Story").attributes(key("constraints").value("")),
+        fieldWithPath("description").description("The description of the Issue.").attributes(key("constraints").value("")),
+        fieldWithPath("points").description("The estimated workload to finish the story.").attributes(key("constraints").value("")),
+        fieldWithPath("status").description("The current status.").attributes(key("constraints").value("")),
+        fieldWithPath("id").description("The unique id.").attributes(key("constraints").value("")),
+        fieldWithPath("createdAt").description("UTC Time of the creation of the issue.").attributes(key("constraints").value("")),
+        fieldWithPath("assignee").description("Currently assigned developer").attributes(key("constraints").value("")),
+        fieldWithPath("priority").description("Priority of the Bug").attributes(key("constraints").value("")),
+        fieldWithPath("title").description("The title of the Issue.").attributes(key("constraints").value(""))
     };
 
     @Test

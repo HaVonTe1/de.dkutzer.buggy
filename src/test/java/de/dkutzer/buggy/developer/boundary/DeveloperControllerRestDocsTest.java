@@ -3,14 +3,15 @@ package de.dkutzer.buggy.developer.boundary;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import de.dkutzer.buggy.ConstrainedFields;
 import de.dkutzer.buggy.developer.control.DeveloperRepository;
+import de.dkutzer.buggy.developer.entity.DeveloperDto;
 import de.dkutzer.buggy.developer.entity.DeveloperEntity;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -57,11 +58,12 @@ class DeveloperControllerRestDocsTest {
             .build();
     }
 
+    private static  final ConstrainedFields CONSTRAINED_FIELDS = new ConstrainedFields(DeveloperDto.class);
     private static final FieldDescriptor[] developerOutFieldDescriptors = {
-        fieldWithPath("name").description("The Name of the Developer")
+           CONSTRAINED_FIELDS.withPath("name").description("The name of the Developer")
     };
     private static final FieldDescriptor[] developerInFieldDescriptors = {
-        fieldWithPath("name").description("The Name of the Developer")
+            CONSTRAINED_FIELDS.withPath("name").description("The Name of the Developer")
     };
 
     @Test
@@ -81,7 +83,7 @@ class DeveloperControllerRestDocsTest {
             // rest docs
             .andDo(document(operationName,
                 responseFields(developerOutFieldDescriptors),
-                requestFields(developerInFieldDescriptors)));
+                requestFields(CONSTRAINED_FIELDS.withPath("name").description("the name of the developer"))));
 
         Assert.assertEquals(developerRepository.count(),1);
         Assert.assertTrue(developerRepository.findByName("Steve Jobs").isPresent());
